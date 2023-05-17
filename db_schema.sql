@@ -70,6 +70,14 @@ alter table Forms_pollanswers  add column if not exists pollquestions_id bigint 
 alter table Forms_pollanswers  add column if not exists answer text;
 
 
+create table if not exists Searches();
+
+alter table Searches add column if not exists id bigserial primary key;
+
+alter table Searches add column if not exists searchData json;
+
+
+
 --MINIMAL DATA IMPORT (not strictly IDEMPOTENT, only PSQL compatible, will fix later)
 
 insert into FormTemplates(id, name) values
@@ -99,10 +107,10 @@ insert into FormTemplates_pollquestions(id, FormTemplates_id, pollquestion) valu
 ON CONFLICT (id) DO NOTHING;
 
 insert into FormTemplates_pollquestions_relations(id, pollquestions_id, if, "then") values
-(1, 1, '=1', 2),
-(2, 1, '=0', 3),
-(3, 4, '=1', 5),
-(4, 4, '=0', 6)
+(1, 1, '=yes', 2),
+(2, 1, '=no', 3),
+(3, 4, '=yes', 5),
+(4, 4, '=no', 6)
 ON CONFLICT (id) DO NOTHING;
 
 
@@ -123,4 +131,8 @@ ON CONFLICT (id) DO NOTHING;
 insert into Forms_pollanswers(id, Forms_id, pollquestions_id, answer) values
 (1, 1, 1, '1'),
 (2, 1, 2, 'SomeExampleReasonForSatisfaction')
+ON CONFLICT (id) DO NOTHING;
+
+insert into Searches(id, searchData) values
+(1, '{"forms_answers": {"answer": "someExample"}}')
 ON CONFLICT (id) DO NOTHING;
