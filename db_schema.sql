@@ -1,6 +1,6 @@
 --SCHEMA DEFINITION (only PSQL compatible, will fix later)
 
-CREATE ROLE admin  WITH LOGIN SUPERUSER PASSWORD 'password';
+--CREATE ROLE admin  WITH LOGIN SUPERUSER PASSWORD 'password';
 
 create table if not exists FormTemplates();
 
@@ -58,7 +58,9 @@ alter table Forms_answers  add column if not exists questions_id bigint referenc
 
 alter table Forms_answers  add column if not exists answer text;
 
-alter table Forms_answers add constraint uniq unique (forms_id, questions_id);
+alter table Forms_answers drop constraint if exists uniq_forms_answers;
+
+alter table Forms_answers add constraint uniq_forms_answers unique (forms_id, questions_id);
 
 
 
@@ -72,7 +74,9 @@ alter table Forms_pollanswers  add column if not exists pollquestions_id bigint 
 
 alter table Forms_pollanswers  add column if not exists answer text;
 
-alter table Forms_pollanswers add constraint uniq unique (forms_id, pollquestions_id);
+alter table Forms_pollanswers drop constraint if exists uniq_forms_pollanswers;
+
+alter table Forms_pollanswers add constraint uniq_forms_pollanswers unique (forms_id, pollquestions_id);
 
 
 create table if not exists Searches();
