@@ -74,7 +74,7 @@ create table if not exists Searches();
 
 alter table Searches add column if not exists id bigserial primary key;
 
-alter table Searches add column if not exists searchData json;
+alter table Searches add column if not exists searchData jsonb;
 
 
 
@@ -136,3 +136,15 @@ ON CONFLICT (id) DO NOTHING;
 insert into Searches(id, searchData) values
 (1, '{"forms_answers": {"answer": "someExample"}}')
 ON CONFLICT (id) DO NOTHING;
+
+--sanitized i/o
+
+prepare get_forms_list as select forms.id,  formtemplates.name from forms left join formtemplates on forms.formtemplates_id = formtemplates.id;
+
+prepare get_form_qa (integer) as select json_agg(json_build_object('question', "question", 'answer', forms_answers.answer))  from formtemplates_questions left  join forms_answers on formtemplates_questions.id = forms_answers.questions_id where forms_answers.forms_id = $1;
+
+prepare get_form_poll (integer) as select json_agg(json_build_object('pollquestion', "pollquestion", 'answer', forms_pollanswers.answer, 'if', if, 'then', "then"))  from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id left join formtemplates_pollquestions_relations on formtemplates_pollquestions.id = formtemplates_pollquestions_relations.pollquestions_id  where forms_pollanswers.forms_id = $1;
+
+
+prepare post_new_form (integer) as insert into forms (name) values ($1) returning id;
+
