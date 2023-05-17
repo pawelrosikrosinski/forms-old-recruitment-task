@@ -50,7 +50,7 @@ alter table Forms  add column if not exists FormTemplates_id bigint references F
 
 create table if not exists Forms_answers();
 
-alter table Forms_answers  add column if not exists id bigserial primary key;
+--alter table Forms_answers  add column if not exists id bigserial primary key;
 
 alter table Forms_answers  add column if not exists Forms_id bigint references Forms(id);
 
@@ -58,16 +58,21 @@ alter table Forms_answers  add column if not exists questions_id bigint referenc
 
 alter table Forms_answers  add column if not exists answer text;
 
+alter table Forms_answers add constraint uniq unique (forms_id, questions_id)
+
+
 
 create table if not exists Forms_pollanswers();
 
-alter table Forms_pollanswers  add column if not exists id bigserial primary key;
+--alter table Forms_pollanswers  add column if not exists id bigserial primary key;
 
 alter table Forms_pollanswers  add column if not exists Forms_id bigint references Forms(id);
 
 alter table Forms_pollanswers  add column if not exists pollquestions_id bigint references FormTemplates_pollquestions(id);
 
 alter table Forms_pollanswers  add column if not exists answer text;
+
+alter table Forms_pollanswers add constraint uniq unique (forms_id, pollquestions_id)
 
 
 create table if not exists Searches();
@@ -141,7 +146,7 @@ ON CONFLICT (id) DO NOTHING;
 
 prepare get_forms_list as select forms.id,  formtemplates.name from forms left join formtemplates on forms.formtemplates_id = formtemplates.id;
 
-prepare get_form_qa (integer) as select json_agg(json_build_object('question', "question", 'answer', forms_answers.answer))  from formtemplates_questions left  join forms_answers on formtemplates_questions.id = forms_answers.questions_id where forms_answers.forms_id = $1;
+prepare get_form_qa (integer) as select json_agg(formtemplates_questions.id, json_build_object('question', "question", 'answer', forms_answers.answer))  from formtemplates_questions left  join forms_answers on formtemplates_questions.id = forms_answers.questions_id where forms_answers.forms_id = $1;
 
 prepare get_form_poll (integer) as select json_agg(json_build_object('pollquestion', "pollquestion", 'answer', forms_pollanswers.answer, 'if', if, 'then', "then"))  from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id left join formtemplates_pollquestions_relations on formtemplates_pollquestions.id = formtemplates_pollquestions_relations.pollquestions_id  where forms_pollanswers.forms_id = $1;
 
