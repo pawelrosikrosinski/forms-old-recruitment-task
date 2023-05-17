@@ -36,3 +36,31 @@ alter table FormTemplates_pollquestions_relations  add column if not exists if v
 alter table FormTemplates_pollquestions_relations  add column if not exists "then" bigint;
 
 
+create table if not exists Forms();
+
+alter table Forms  add column if not exists id bigserial primary key;
+
+alter table Forms  add column if not exists FormsTemplates_id bigint references FormTemplates(id);
+
+
+create table if not exists Forms_answers();
+
+alter table Forms_answers  add column if not exists id bigserial primary key;
+
+alter table Forms_answers  add column if not exists Forms_id bigint references Forms(id);
+
+alter table Forms_answers  add column if not exists questions_id bigint references FormTemplates_questions(id);
+
+alter table Forms_answers  add column if not exists answer text;
+
+
+create table if not exists Forms_pollanswers();
+
+alter table Forms_pollanswers  add column if not exists id bigserial primary key;
+
+alter table Forms_pollanswers  add column if not exists Forms_id bigint references Forms(id);
+
+alter table Forms_pollanswers  add column if not exists pollquestions_id bigint references FormTemplates_pollquestions(id);
+
+alter table Forms_pollanswers  add column if not exists answer text;
+
