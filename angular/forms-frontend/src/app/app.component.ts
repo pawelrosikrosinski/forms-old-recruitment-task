@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: "<div>sacasca</div>",
-  //styleUrls: ['./app.component.css']
+  //imports:[],
+  template: "<app-bar></app-bar><app-form-list></app-form-list>",
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'forms-frontend';
