@@ -3,7 +3,8 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-from flask import Flask, request
+from flask import Flask, request, json, jsonify
+from flask_cors import CORS
 import psycopg2
 from psycopg2.extras import DictCursor
 
@@ -17,12 +18,14 @@ if __name__ == '__main__':
     cursor.execute(open("db_schema.sql", "r").read())
 
     app = Flask(__name__)
+    CORS(app)
 
 
     @app.route("/get_forms_list")
     def get_forms_list():
         cursor.execute("execute get_forms_list")
-        return cursor.fetchall()
+
+        return  '{"test": ' + cursor.fetchone()[0] + "}"
 
 
     @app.route("/get_form_qa")
