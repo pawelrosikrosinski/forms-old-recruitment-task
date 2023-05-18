@@ -11,7 +11,7 @@ import { FormListPost } from '../form-list-post';
     <section>
     
       <div class="post">
-      Form ID: {{master.id}}<br>Template Name: {{master.template_name}}<br>
+      Form ID: {{master.forms_id}}<br>Template Name: {{master.formtemplates_name}}<br>
       
       <span>
       <button class="button">Edit</button>

@@ -25,7 +25,7 @@ if __name__ == '__main__':
     def get_forms_list():
         cursor.execute("execute get_forms_list")
 
-        return  '{"test": ' + cursor.fetchone()[0] + "}"
+        return  cursor.fetchone()[0]
 
 
     @app.route("/get_form_qa")

@@ -4,17 +4,16 @@ import { FormListPostComponent } from '../form-list-post/form-list-post.componen
 import { FormListPost } from '../form-list-post';
 import { HttpClient } from '@angular/common/http';
 
-
+let li:any;
 @Component({
   selector: 'app-form-list',
   standalone: true,
   imports: [CommonModule,  FormListPostComponent, FormListPostComponent],
   template: `
-    <app-form-list-post [master] = "FormList" ></app-form-list-post>
+    <app-form-list-post *ngFor="let master of FormList" [master] = "master"></app-form-list-post>
   `,
   styleUrls: ['./form-list.component.css']
 })
-
 
 export class FormListComponent implements OnInit{
 
@@ -22,31 +21,34 @@ export class FormListComponent implements OnInit{
 
   
   
-  li:any;
-lis=[];
 
 
-  constructor(private http:HttpClient){
+
+
+  constructor(private http:HttpClient){}
     
 
+ 
+  
 
-
-
-  }
+    
+    
   ngOnInit(): void {
     this.http.get('http://127.0.0.1:5000/get_forms_list').subscribe(Response => {
     console.log(Response)
-    this.li=Response;
-    this.lis=this.li.test;
-    console.log(this.lis[0])
+    li=Response;
+    
+    console.log(li[0].formtemplates_name)
+
+    for (const i in li){
+   console.log(li[i])
+   console.log("break")
+    this.FormList = li
+   
+    }
   })}
 
-  FormList: FormListPost = {
-    
-    id: 1,
-    template_name: "VehicleDeal",
-    //list: abc,
-  }
+  FormList: FormListPost [] = []
 
 
  
