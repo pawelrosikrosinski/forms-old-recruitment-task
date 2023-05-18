@@ -1,0 +1,15 @@
+.post {
+
+    width:100%;
+    
+    border-top:2px solid red;
+    border-bottom:2px solid red;
+    background-color: lightgray;
+    margin-top: 10px;
+    padding-block: 10px;
+}
+
+.button {
+
+   margin-right:10px
+}
