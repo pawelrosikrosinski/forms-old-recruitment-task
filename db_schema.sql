@@ -154,7 +154,7 @@ ON CONFLICT (id) do update set searchData = excluded.searchData;
 
 
 
-prepare get_forms_list as select json_agg(json_build_object(forms.id,  formtemplates.name))::text from forms left join formtemplates on forms.formtemplates_id = formtemplates.id;
+prepare get_forms_list as select json_agg(json_build_object('forms_id', forms.id, 'formtemplates_id', formtemplates_id, 'formtemplates_name', formtemplates.name))::text from forms left join formtemplates on forms.formtemplates_id = formtemplates.id;
 
 prepare get_form_qa (integer) as select json_object_agg(formtemplates_questions.id, json_build_object('question', "question", 'answer', forms_answers.answer))  from formtemplates_questions left  join forms_answers on formtemplates_questions.id = forms_answers.questions_id where forms_answers.forms_id = $1;
 
