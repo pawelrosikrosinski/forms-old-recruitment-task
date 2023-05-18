@@ -4,6 +4,10 @@
 
 create table if not exists FormTemplates();
 
+
+
+
+
 alter table FormTemplates add column if not exists id bigserial primary key;
 
 alter table FormTemplates add column if not exists name varchar(30);
@@ -148,13 +152,15 @@ ON CONFLICT (id) do update set searchData = excluded.searchData;
 
 --sanitized i/o
 
+
+
 prepare get_forms_list as select forms.id,  formtemplates.name from forms left join formtemplates on forms.formtemplates_id = formtemplates.id;
 
 prepare get_form_qa (integer) as select json_object_agg(formtemplates_questions.id, json_build_object('question', "question", 'answer', forms_answers.answer))  from formtemplates_questions left  join forms_answers on formtemplates_questions.id = forms_answers.questions_id where forms_answers.forms_id = $1;
 
 prepare get_form_poll (integer) as select json_object_agg(formtemplates_pollquestions.id, json_build_object('pollquestion', "pollquestion", 'answer', forms_pollanswers.answer, 'if', if, 'then', "then"))  from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id left join formtemplates_pollquestions_relations on formtemplates_pollquestions.id = formtemplates_pollquestions_relations.pollquestions_id  where forms_pollanswers.forms_id = $1;
 
-prepare get_searches as select id, searchData from searches;
+prepare get_searches as select json_object_agg(id, searchData) from searches;
 
 
 
