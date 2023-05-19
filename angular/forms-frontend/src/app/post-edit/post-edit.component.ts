@@ -31,7 +31,7 @@ export class PostEditComponent {
 
   FormQa: FormQa [] = []
 
-  constructor(private http:HttpClient, private route: ActivatedRoute){}
+  constructor(private http:HttpClient, private route: ActivatedRoute, private router: Router){}
 
   save_click(){
     
@@ -67,6 +67,11 @@ export class PostEditComponent {
 
     this.http.post('http://127.0.0.1:5000/post_form_qa?forms_id=' + this.id, JSON.stringify(this.FormQa), options).subscribe(Response => {
     console.log(Response)})
+
+
+    this.router.navigate(['']);
+
+
 
   }
 
