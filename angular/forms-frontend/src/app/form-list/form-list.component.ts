@@ -21,18 +21,10 @@ export class FormListComponent implements OnInit{
 
 
 
-  
-  
-
-
-
-
   constructor(private http:HttpClient){}
     
 
  
-  
-
     
     
   ngOnInit(): void {
@@ -46,7 +38,7 @@ export class FormListComponent implements OnInit{
    console.log(li[i])
    console.log("break")
     this.FormList = li
-   
+    
     }
   })}
 
