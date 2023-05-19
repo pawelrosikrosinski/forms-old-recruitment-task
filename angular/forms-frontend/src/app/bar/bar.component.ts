@@ -1,18 +1,25 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddIconComponent } from '../add-icon/add-icon.component';
+//import { AddIconComponent } from '../add-icon/add-icon.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bar',
   standalone: true,
-  imports: [CommonModule, AddIconComponent],
+  imports: [CommonModule],
   template: `
     <div class="bar"> 
-      <app-add-icon></app-add-icon>
+      <button (click)="addButton()" class="button">Add</button>
     </div>
   `,
   styleUrls: ['./bar.component.css']
 })
 export class BarComponent {
+
+  constructor(private router: Router) {}
+
+  addButton(){
+    this.router.navigate(['add']);
+  }
 
 }

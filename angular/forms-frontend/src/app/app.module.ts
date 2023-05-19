@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BarComponent } from './bar/bar.component';
-import { AddIconComponent } from './add-icon/add-icon.component';
+//import { AddIconComponent } from './add-icon/add-icon.component';
 import { FormListComponent } from './form-list/form-list.component';
 import { HttpClientModule } from  '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     
   ],
   imports: [
-    BrowserModule, BarComponent, AddIconComponent, FormListComponent, HttpClientModule, AppRoutingModule, 
+    BrowserModule, BarComponent, FormListComponent, HttpClientModule, AppRoutingModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]
