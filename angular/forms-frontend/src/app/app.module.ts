@@ -12,11 +12,6 @@ import { PageNotActiveComponent } from './page-not-active/page-not-active.compon
 import { AppRoutingModule } from './app-routing.module';
 
 
-const appRoutes: Routes = [
-  
-  { path: 'page_not_found', component: PageNotActiveComponent },
-  { path: '**', component: PageNotActiveComponent },  
-];
 
 
 @NgModule({
@@ -25,7 +20,7 @@ const appRoutes: Routes = [
     
   ],
   imports: [
-    BrowserModule, BarComponent, AddIconComponent, FormListComponent, HttpClientModule, RouterModule.forRoot(appRoutes, { enableTracing: true }), AppRoutingModule, 
+    BrowserModule, BarComponent, AddIconComponent, FormListComponent, HttpClientModule, AppRoutingModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

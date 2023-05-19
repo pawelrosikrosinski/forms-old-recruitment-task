@@ -156,7 +156,7 @@ ON CONFLICT (id) do update set searchData = excluded.searchData;
 
 prepare get_forms_list as select json_agg(json_build_object('forms_id', forms.id, 'formtemplates_id', formtemplates_id, 'formtemplates_name', formtemplates.name))::text from forms left join formtemplates on forms.formtemplates_id = formtemplates.id;
 
-prepare get_form_qa (integer) as select json_object_agg(formtemplates_questions.id, json_build_object('question', "question", 'answer', forms_answers.answer))  from formtemplates_questions left  join forms_answers on formtemplates_questions.id = forms_answers.questions_id where forms_answers.forms_id = $1;
+prepare get_form_qa (integer) as select json_agg(json_build_object('question_id', formtemplates_questions.id, 'question', "question", 'answer', forms_answers.answer))  from formtemplates_questions left  join forms_answers on formtemplates_questions.id = forms_answers.questions_id where forms_answers.forms_id = $1;
 
 prepare get_form_poll (integer) as select json_object_agg(formtemplates_pollquestions.id, json_build_object('pollquestion', "pollquestion", 'answer', forms_pollanswers.answer, 'if', if, 'then', "then"))  from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id left join formtemplates_pollquestions_relations on formtemplates_pollquestions.id = formtemplates_pollquestions_relations.pollquestions_id  where forms_pollanswers.forms_id = $1;
 
