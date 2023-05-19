@@ -167,6 +167,6 @@ prepare get_searches as select json_object_agg(id, searchData) from searches;
 prepare create_new_form (integer) as insert into forms (formtemplates_id) values ($1) returning id;
 
 
-prepare post_form_qa (jsonb, integer) as insert into forms_answers (forms_id, questions_id, answer)   (select $2,  (value->'question_id')::integer, (value->'answer')::text from jsonb_array_elements($1)) on conflict (forms_id, questions_id) do update set answer = excluded.answer;
+prepare post_form_qa (jsonb, integer) as insert into forms_answers (forms_id, questions_id, answer)   (select $2,  (value->'question_id')::integer, (value->>'answer') from jsonb_array_elements($1)) on conflict (forms_id, questions_id) do update set answer = excluded.answer;
 
 prepare post_form_poll (jsonb) as insert into forms_pollanswers (forms_id, pollquestions_id, answer) values ((select "key" from jsonb_each($1))::integer, ((select "value" from jsonb_each($1))  -> 'pollquestion_id')::integer, ((select "value" from jsonb_each($1))  -> 'answer')::text) on conflict (forms_id, pollquestions_id) do update set answer = excluded.answer;
