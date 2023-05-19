@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormQa } from '../form-qa';
 
@@ -11,5 +11,20 @@ import { FormQa } from '../form-qa';
 })
 
 export class QaPostComponent {
+
+  readAnswer(answer: string){
+    this.qpost.answer = answer
+  }
+
   @Input() qpost!: FormQa
+  @Output() newItemEvent = new EventEmitter<string>();
+
+  addNewItem(value: string) {
+    this.newItemEvent.emit(value);
+  }
+
+
+  console(){
+    console.log("TEST")
+  }
 }

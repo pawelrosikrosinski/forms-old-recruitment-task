@@ -1,7 +1,6 @@
-<div class="qapost"> 
-    Question: {{qpost.question}} <br>
-    Answer: <input type="text" value="{{qpost.answer}}">
-
+<div class="qapost">
+  Question: {{qpost.question}} <br>
+  Answer: <input #answerfield (change)="readAnswer(answerfield.value)" type="text" value="{{qpost.answer}}">
 
 
 </div>

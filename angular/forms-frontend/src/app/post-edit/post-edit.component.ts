@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormQa } from '../form-qa';
 import { QaPostComponent } from '../qa-post/qa-post.component';
 
@@ -13,17 +13,29 @@ let li:any;
   imports: [CommonModule, QaPostComponent],
   template: `
     
-     <app-qa-post *ngFor="let qpost of FormQa" [qpost] = "qpost"></app-qa-post> <button>SAVE</button>
+     <app-qa-post *ngFor="let qpost of FormQa" [qpost] = "qpost"></app-qa-post> <button (click)="test_variable()">SAVE</button>
     
   `,
-  styleUrls: ['./post-edit.component.css']
+  styleUrls: ['./post-edit.component.css'],
+  
 })
 export class PostEditComponent {
+
+
+  items:string [] = []
+
+  addItem(newItem: string) {
+    this.items.push(newItem);
+  }
 
 
   FormQa: FormQa [] = []
 
   constructor(private http:HttpClient, private route: ActivatedRoute){}
+
+  save_click(){
+    
+  }
     
   id: number = 1
   private sub:any
@@ -48,6 +60,15 @@ export class PostEditComponent {
     
     
   })}
+
+  test_variable(){
+    console.log(JSON.stringify(this.FormQa))
+    const options = {headers: {'Content-Type': 'application/json'}};
+
+    this.http.post('http://127.0.0.1:5000/post_form_qa?forms_id=' + this.id, JSON.stringify(this.FormQa), options).subscribe(Response => {
+    console.log(Response)})
+
+  }
 
  
 }
