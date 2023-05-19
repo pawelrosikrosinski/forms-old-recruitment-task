@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormListPostComponent } from '../form-list-post/form-list-post.component';
 import { FormListPost } from '../form-list-post';
 import { HttpClient } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
 
 let li:any;
+
 @Component({
   selector: 'app-form-list',
   standalone: true,
   imports: [CommonModule,  FormListPostComponent, FormListPostComponent],
   template: `
-    <app-form-list-post *ngFor="let master of FormList" [master] = "master"></app-form-list-post>
+    <br><span>List of Forms:</span><app-form-list-post *ngFor="let master of FormList" [master] = "master"></app-form-list-post>
   `,
   styleUrls: ['./form-list.component.css']
 })
