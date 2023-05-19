@@ -13,7 +13,7 @@ let li:any;
   imports: [CommonModule, QaPostComponent],
   template: `
     
-     <app-qa-post *ngFor="let qpost of FormQa" [qpost] = "qpost"></app-qa-post>
+     <app-qa-post *ngFor="let qpost of FormQa" [qpost] = "qpost"></app-qa-post> <button>SAVE</button>
     
   `,
   styleUrls: ['./post-edit.component.css']
