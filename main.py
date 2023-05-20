@@ -56,7 +56,7 @@ if __name__ == '__main__':
     @app.route("/create_new_form")
     def create_new_form():
         cursor.execute(f"execute create_new_form ({request.args.get('formtemplates_id')})")
-        return cursor.fetchone()[0]
+        return str(cursor.fetchone()[0])
 
 
     @app.route("/post_form_qa", methods=['GET', 'POST'])

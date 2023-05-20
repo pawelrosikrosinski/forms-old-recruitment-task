@@ -10,6 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormListPostComponent } from './form-list-post/form-list-post.component';
 import { PageNotActiveComponent } from './page-not-active/page-not-active.component';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -20,7 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
     
   ],
   imports: [
-    BrowserModule, BarComponent, FormListComponent, HttpClientModule, AppRoutingModule, 
+    BrowserModule, BarComponent, FormListComponent, HttpClientModule, AppRoutingModule, BrowserAnimationsModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

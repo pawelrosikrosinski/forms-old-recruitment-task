@@ -166,7 +166,7 @@ prepare get_searches as select json_object_agg(id, searchData) from searches;
 prepare get_formtemplates as select json_agg(json_build_object('formtemplate_id', id, 'formtemplate_name', name)) from formtemplates;
 
 
-prepare create_new_form (integer) as insert into forms (formtemplates_id) values ($1) returning id;
+prepare create_new_form (integer) as insert into forms (formtemplates_id) values ($1) returning id::integer;
 
 
 prepare post_form_qa (jsonb, integer) as insert into forms_answers (forms_id, questions_id, answer)   (select $2,  (value->'question_id')::integer, (value->>'answer') from jsonb_array_elements($1)) on conflict (forms_id, questions_id) do update set answer = excluded.answer;
