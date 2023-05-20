@@ -162,6 +162,7 @@ prepare get_form_poll (integer) as select json_object_agg(formtemplates_pollques
 
 prepare get_searches as select json_object_agg(id, searchData) from searches;
 
+prepare get_formtemplates as select json_agg(json_build_object('formtemplate_id', id, 'formtemplate_name', name)) from formtemplates;
 
 
 prepare create_new_form (integer) as insert into forms (formtemplates_id) values ($1) returning id;

@@ -21,11 +21,18 @@ if __name__ == '__main__':
     CORS(app)
 
 
+    @app.route("/get_formtemplates")
+    def get_formtemplates():
+        cursor.execute("execute get_formtemplates")
+
+        return cursor.fetchone()[0]
+
+
     @app.route("/get_forms_list")
     def get_forms_list():
         cursor.execute("execute get_forms_list")
 
-        return  cursor.fetchone()[0]
+        return cursor.fetchone()[0]
 
 
     @app.route("/get_form_qa")
