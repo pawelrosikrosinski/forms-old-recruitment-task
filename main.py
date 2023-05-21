@@ -66,10 +66,11 @@ if __name__ == '__main__':
             return "Yes"
 
 
-    @app.route("/post_form_poll")
+    @app.route("/post_form_poll", methods=['GET', 'POST'])
     def post_form_poll():
-        cursor.execute(f"execute post_form_poll ({request.get_json()})")
-        return cursor.fetchone()[0]
+        if request.method == 'POST':
+            cursor.execute(f"execute post_form_poll ('{request.data.decode()}', {request.args.get('forms_id')})")
+            return "Yes"
 
 app.run()
 

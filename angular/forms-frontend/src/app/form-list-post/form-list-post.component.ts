@@ -17,7 +17,7 @@ import { Router, RouterModule } from '@angular/router';
       
       <span>
       <button class="button" (click)="click_edit()">Edit</button>
-      <button class="button" >Poll</button>
+      <button class="button" (click)="click_poll()" >Poll</button>
       </span>
       </div>
 
@@ -35,6 +35,10 @@ export class FormListPostComponent {
 
   click_edit(){
     this.router.navigate(['/edit/' + this.master.forms_id]);
+  }
+
+  click_poll(){
+    this.router.navigate(['/poll/' + this.master.forms_id]);
   }
 
  }

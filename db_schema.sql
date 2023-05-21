@@ -34,6 +34,19 @@ alter table FormTemplates_pollquestions  add column if not exists FormTemplates_
 alter table FormTemplates_pollquestions  add column if not exists pollquestion text;
 
 
+
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'pollquestion_type') THEN
+        create type pollquestion_type AS ENUM ('text', 'boolean');
+    END IF;
+END
+$$;
+
+
+alter table FormTemplates_pollquestions  add column if not exists pollquestion_type pollquestion_type;
+
+
 create table if not exists FormTemplates_pollquestions_relations();
 
 alter table FormTemplates_pollquestions_relations  add column if not exists id bigserial primary key;
@@ -72,7 +85,7 @@ create table if not exists Forms_pollanswers();
 
 --alter table Forms_pollanswers  add column if not exists id bigserial primary key;
 
-alter table Forms_pollanswers  add column if not exists Forms_id bigint references Forms(id);
+--alter table Forms_pollanswers  add column if not exists Forms_id bigint references Forms(id);
 
 alter table Forms_pollanswers  add column if not exists pollquestions_id bigint references FormTemplates_pollquestions(id);
 
@@ -110,14 +123,14 @@ insert into FormTemplates_questions(id, FormTemplates_id, question) values
 (9, 2, 'isLease')
 ON CONFLICT (id) do update set (FormTemplates_id, question) = (excluded.FormTemplates_id, excluded.question);
 
-insert into FormTemplates_pollquestions(id, FormTemplates_id, pollquestion) values
-(1, 1, 'isSatisfied?'),
-(2, 1, 'WhySatisfied?'),
-(3, 1, 'WhyNotSatisfied?'),
-(4, 2, 'isSatisfied?'),
-(5, 2, 'WhySatisfied?'),
-(6, 2, 'WhyNotSatisfied?')
-ON CONFLICT (id) do update set (FormTemplates_id, pollquestion) = (excluded.FormTemplates_id, excluded.pollquestion);
+insert into FormTemplates_pollquestions(id, FormTemplates_id, pollquestion, pollquestion_type) values
+(1, 1, 'isSatisfied?', 'boolean'),
+(2, 1, 'WhySatisfied?', 'text'),
+(3, 1, 'WhyNotSatisfied?', 'text'),
+(4, 2, 'isSatisfied?', 'boolean'),
+(5, 2, 'WhySatisfied?', 'text'),
+(6, 2, 'WhyNotSatisfied?', 'text')
+ON CONFLICT (id) do update set (FormTemplates_id, pollquestion, pollquestion_type) = (excluded.FormTemplates_id, excluded.pollquestion, excluded.pollquestion_type);
 
 insert into FormTemplates_pollquestions_relations(id, pollquestions_id, if, "then") values
 (1, 1, '=yes', 2),
@@ -159,7 +172,7 @@ prepare get_forms_list as select json_agg(json_build_object('forms_id', forms.id
 prepare get_form_qa (integer) as select json_agg(json_build_object('question_id', formtemplates_questions.id, 'question', "question", 'answer', a.answer))  from formtemplates_questions left  join (select * from forms_answers where forms_id = $1) a  on formtemplates_questions.id = a.questions_id where formtemplates_questions.formtemplates_id = (select formtemplates_id from forms where id = $1);
 
 
-prepare get_form_poll (integer) as select json_agg(json_build_object('pollquestion_id', formtemplates_pollquestions.id, 'pollquestion', "pollquestion", 'answer', forms_pollanswers.answer, 'relations', (select json_object_agg("if", "then") from formtemplates_pollquestions_relations where pollquestions_id =  formtemplates_pollquestions.id)))  from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id  where formtemplates_pollquestions.formtemplates_id = (select formtemplates_id from forms where id = $1);
+prepare get_form_poll (integer) as select json_agg(json_build_object('pollquestion_id', formtemplates_pollquestions.id, 'pollquestion', "pollquestion", 'pollquestion_type', pollquestion_type ,'answer', forms_pollanswers.answer, 'relations', (select json_object_agg("if", "then") from formtemplates_pollquestions_relations where pollquestions_id =  formtemplates_pollquestions.id)))  from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id  where formtemplates_pollquestions.formtemplates_id = (select formtemplates_id from forms where id = $1);
 
 prepare get_searches as select json_object_agg(id, searchData) from searches;
 
@@ -171,4 +184,4 @@ prepare create_new_form (integer) as insert into forms (formtemplates_id) values
 
 prepare post_form_qa (jsonb, integer) as insert into forms_answers (forms_id, questions_id, answer)   (select $2,  (value->'question_id')::integer, (value->>'answer') from jsonb_array_elements($1)) on conflict (forms_id, questions_id) do update set answer = excluded.answer;
 
-prepare post_form_poll (jsonb) as insert into forms_pollanswers (forms_id, pollquestions_id, answer) values ((select "key" from jsonb_each($1))::integer, ((select "value" from jsonb_each($1))  -> 'pollquestion_id')::integer, ((select "value" from jsonb_each($1))  -> 'answer')::text) on conflict (forms_id, pollquestions_id) do update set answer = excluded.answer;
+prepare post_form_poll (jsonb, integer) as insert into forms_pollanswers (forms_id, pollquestions_id, answer)   (select $2,  (value->'pollquestion_id')::integer, (value->>'answer') from jsonb_array_elements($1)) on conflict (forms_id, pollquestions_id) do update set answer = excluded.answer;

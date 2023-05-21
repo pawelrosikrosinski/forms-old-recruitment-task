@@ -5,6 +5,7 @@ import { PageNotActiveComponent } from './page-not-active/page-not-active.compon
 import { FormListComponent } from './form-list/form-list.component';
 import { PostEditComponent } from './post-edit/post-edit.component';
 import { AddFormComponent } from './add-form/add-form.component';
+import { AddPollComponent } from './add-poll/add-poll.component';
 
 const routes: Routes = [
   {path: '', component: FormListComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
  
   {path: 'edit/:forms_id', component: PostEditComponent},
   {path: 'add', component: AddFormComponent},
+  {path: 'poll/:forms_id', component: AddPollComponent},
   {path: '**', component: PageNotActiveComponent}
 
 ];
