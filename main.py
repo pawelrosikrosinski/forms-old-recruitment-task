@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     @app.route("/get_form_poll")
     def get_form_poll():
-        cursor.execute(f"execute get_form_qa({request.args.get('forms_id')})")
+        cursor.execute(f"execute get_form_poll({request.args.get('forms_id')})")
         return cursor.fetchone()[0]
 
 
