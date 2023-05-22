@@ -30,10 +30,11 @@ Now, more about assigment compatibility.
 
 ---
 
-Build instructions:
+Build instructions (pro forma):
 
-1. Clone this repository
-2. /bin/sh -c '[sudo] docker compose build'
-3. /bin/sh -c '[sudo] docker compose up'
+1. git clone https://github.com/pawelrosikrosinski/forms.git
+2. kindly 'cd' into it
+3. /bin/sh -c '[sudo] docker compose build'
+4. /bin/sh -c '[sudo] docker compose up'
 
 [ ] - optional argument
