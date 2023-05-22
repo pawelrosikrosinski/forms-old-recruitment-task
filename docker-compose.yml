@@ -1,0 +1,37 @@
+# Use postgres/example user/password credentials
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: forms
+      expose: 5432
+  #    ports:
+  #      - "5438:5432"
+
+
+
+  #    volumes:
+  #      - /home/anon/PycharmProjects/forms:/var/lib/postgres
+  #    command: sh -c "psql -d forms < /var/lib/postgres/db_schema.sql"
+
+  flask:
+    build:
+      context: ./docker_flask
+      dockerfile: Dockerfile
+    restart: always
+    command: python main.py
+    ports:
+      - "5000:5000"
+
+  httpd:
+    image: httpd
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker_httpd/forms-frontend/:/usr/local/apache2/htdocs/

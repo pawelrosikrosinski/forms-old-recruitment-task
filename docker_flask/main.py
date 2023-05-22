@@ -11,7 +11,7 @@ from psycopg2.extras import DictCursor
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    connection = psycopg2.connect("dbname=forms user=admin host=127.0.0.1 password=password port=5438",
+    connection = psycopg2.connect("dbname=forms user=admin host=db password=password port=5432",
                                   cursor_factory=DictCursor)
     connection.autocommit = True
 
@@ -74,6 +74,6 @@ if __name__ == '__main__':
             cursor.execute(f"execute post_form_poll ('{request.data.decode()}', {request.args.get('forms_id')})")
             return "Yes"
 
-app.run(port=5000)
+app.run(port=5000, host="0.0.0.0")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
