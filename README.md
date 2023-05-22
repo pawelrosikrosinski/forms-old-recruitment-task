@@ -7,7 +7,7 @@ Postgres takes care of all backend json processing (both synthesis and analysis)
 All queries are SQL-injection resistant.
 
 It would be easier for me to create front-end in pure JS, since frameworks have steep learning curve and I've never touched TypeScript.
-That being noted, I've chosen Angular.
+That being noted, I've chosen Angular. Mostly because I knew someone could get angry for already taking easy path with Flask instead of Django.
 
 IDE's were: PyCharm for backend and VS Code for frontend.
 
