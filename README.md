@@ -11,7 +11,7 @@ That being noted, I've chosen Angular. Mostly because I knew someone could get a
 
 IDE's were: PyCharm for backend and VS Code for frontend.
 
-Frameworks, Libraries and Solutions were: Angular, Flask, Psycopg2, Postgres
+Frameworks, Libraries and Solutions were: Angular, Flask, Psycopg2, Postgres 15.2
 
 Languages: Python, PSQL, TS, HTML, CSS
 
