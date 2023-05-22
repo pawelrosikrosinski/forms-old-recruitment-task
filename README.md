@@ -4,6 +4,8 @@ Oddly enough, I like to work with SQL, so whole solution appear to be db-centric
 
 Postgres takes care of all backend json processing (both synthesis and analysis), and also database schema is defined in idempotent script "db_schema.sql". It is almost free of PL/SQL - only one element required it.
 
+All queries are SQL-injection resistant.
+
 It would be easier for me to create front-end in pure JS, since frameworks have steep learning curve and I've never touched TypeScript.
 That being noted, I've chosen Angular.
 
