@@ -20,5 +20,5 @@ Now, more about assigment compatibility.
 
 1. Every form have two sets of possible answers: questions and pollquestions.
 2. Questions are rendered statically, while pollquestions are renderred dynamically. Also, "questions" are always of type String, while "pollquestions" can be either String or Boolean.
-3. "Pollquestions" are rendered in non-trivial order - depending on previous pollanswers. For now, only "equals to" condition is implemented, but implementing any other would only require adding new switch case.
+3. "Pollquestions" are rendered in non-trivial order - depending on previous pollanswers. The database defines relation tree. For now, only "equals to" condition is implemented, but implementing any other would only require adding new switch case.
 4. Order of "pollquestions" is ensured by a recurent function, what I consider cute addon.
