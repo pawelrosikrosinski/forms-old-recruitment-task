@@ -26,6 +26,7 @@ Now, more about assigment compatibility.
 2. Questions are rendered statically, while pollquestions are rendered dynamically. Also, "questions" are always of type String, while "pollquestions" can be either String or Boolean.
 3. "Pollquestions" are rendered in non-trivial order - depending on previous pollanswers. The database defines relation tree. For now, only "equals to" condition is implemented, but implementing any other would only require adding new switch case.
 4. Order of "pollquestions" is ensured by a recurent function, what I consider nice addon.
+5. Part of the assigment was to create OS-agnostic solution, like Docker containers. Here they are!
 
 ---
 
