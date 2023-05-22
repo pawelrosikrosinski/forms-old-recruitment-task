@@ -133,15 +133,16 @@ insert into FormTemplates_pollquestions(id, FormTemplates_id, pollquestion, poll
 ON CONFLICT (id) do update set (FormTemplates_id, pollquestion, pollquestion_type) = (excluded.FormTemplates_id, excluded.pollquestion, excluded.pollquestion_type);
 
 insert into FormTemplates_pollquestions_relations(id, pollquestions_id, if, "then") values
-(1, 1, '=yes', 2),
-(2, 1, '=no', 3),
-(3, 4, '=yes', 5),
-(4, 4, '=no', 6)
+(1, 1, '=1', 2),
+(2, 1, '=0', 3),
+(3, 4, '=1', 5),
+(4, 4, '=0', 6)
 ON CONFLICT (id) do update set (pollquestions_id, if, "then") = (excluded.pollquestions_id, excluded.if, excluded."then");
 
 
 insert into Forms(id, FormTemplates_id) values
-(1, 1)
+(1, 1),
+(2, 2)
 ON CONFLICT (id) do update set FormTemplates_id = excluded.FormTemplates_id;
 
 
@@ -149,9 +150,9 @@ insert into Forms_answers(id, Forms_id, questions_id, answer) values
 (1, 1, 1, 'sameExampleName'),
 (2, 1, 2, '5'),
 (3, 1, 3, '2'),
-(4, 1, 4, '3'),
-(5, 1, 5, '10'),
-(6, 1, 6, 'someExampleVehicleClass')
+(4, 2, 4, '3'),
+(5, 2, 5, '10'),
+(6, 2, 6, 'someExampleVehicleClass')
 ON CONFLICT (id) do update set (Forms_id, questions_id, answer) = (excluded.Forms_id, excluded.questions_id, excluded.answer);
 
 insert into Forms_pollanswers(id, Forms_id, pollquestions_id, answer) values
@@ -172,7 +173,7 @@ prepare get_forms_list as select json_agg(json_build_object('forms_id', forms.id
 prepare get_form_qa (integer) as select json_agg(json_build_object('question_id', formtemplates_questions.id, 'question', "question", 'answer', a.answer))  from formtemplates_questions left  join (select * from forms_answers where forms_id = $1) a  on formtemplates_questions.id = a.questions_id where formtemplates_questions.formtemplates_id = (select formtemplates_id from forms where id = $1);
 
 
-prepare get_form_poll (integer) as select json_agg(json_build_object('pollquestion_id', formtemplates_pollquestions.id, 'pollquestion', "pollquestion", 'pollquestion_type', pollquestion_type ,'answer', forms_pollanswers.answer, 'relations', (select json_object_agg("if", "then") from formtemplates_pollquestions_relations where pollquestions_id =  formtemplates_pollquestions.id)))  from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id  where formtemplates_pollquestions.formtemplates_id = (select formtemplates_id from forms where id = $1);
+prepare get_form_poll (integer) as select json_agg(json_build_object('pollquestion_id', formtemplates_pollquestions.id, 'pollquestion', "pollquestion", 'pollquestion_type', pollquestion_type ,'answer', forms_pollanswers.answer, 'relations', (select json_build_object('if', "if", 'pollquestion_id', "pollquestions_id") from formtemplates_pollquestions_relations where formtemplates_pollquestions_relations."then" =  formtemplates_pollquestions.id)) ORDER BY formtemplates_pollquestions.id )   from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id  where formtemplates_pollquestions.formtemplates_id = (select formtemplates_id from forms where id = $1);
 
 prepare get_searches as select json_object_agg(id, searchData) from searches;
 

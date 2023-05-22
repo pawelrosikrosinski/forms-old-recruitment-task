@@ -1,0 +1,13 @@
+<p>Choose template:</p>
+
+
+<mat-radio-group [(ngModel)]="favoriteSeason">
+
+
+  <mat-radio-button *ngFor="let template of templateList" class="templates_button" value="{{template.formtemplate_id}}">
+    {{template.formtemplate_name}}
+  </mat-radio-button>
+
+
+</mat-radio-group>
+<button (click)="template_chosen()">ADD NEW FORM</button>

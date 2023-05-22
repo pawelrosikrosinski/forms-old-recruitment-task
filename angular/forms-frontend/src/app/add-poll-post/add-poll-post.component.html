@@ -1,0 +1,16 @@
+<p>add-poll-post works!</p>
+<div>
+  {{pollquestion.pollquestion}}
+  <div *ngIf="pollquestion.pollquestion_type=='text'">
+
+    <input [(ngModel)]="pollquestion.answer" type="text">
+  </div>
+
+  <div *ngIf="pollquestion.pollquestion_type=='boolean'">
+    <mat-radio-group [(ngModel)]="pollquestion.answer">
+      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="0">No</mat-radio-button>
+    </mat-radio-group>
+
+  </div>
+
