@@ -36,5 +36,6 @@ Build instructions (pro forma):
 2. kindly 'cd' into it
 3. /bin/sh -c '[sudo] docker compose build'
 4. /bin/sh -c '[sudo] docker compose up'
+5. App is now available at http://127.0.0.1:80
 
 [ ] - optional argument
