@@ -166,13 +166,16 @@ insert into Searches(id, searchData) values
 (1, '{"forms_answers": {"answer": "someExample"}}')
 ON CONFLICT (id) do update set searchData = excluded.searchData;
 
+
+SELECT setval('forms_id_seq', (select max(id) from forms), true);
+
 --sanitized i/o
 
 
 
-prepare get_forms_list as select json_agg(json_build_object('forms_id', forms.id, 'formtemplates_id', formtemplates_id, 'formtemplates_name', formtemplates.name))::text from forms left join formtemplates on forms.formtemplates_id = formtemplates.id;
+prepare get_forms_list as select json_agg(json_build_object('forms_id', forms.id, 'formtemplates_id', formtemplates_id, 'formtemplates_name', formtemplates.name) order by forms.id desc)::text from forms left join formtemplates on forms.formtemplates_id = formtemplates.id;
 
-prepare get_form_qa (integer) as select json_agg(json_build_object('question_id', formtemplates_questions.id, 'question', "question", 'answer', a.answer))  from formtemplates_questions left  join (select * from forms_answers where forms_id = $1) a  on formtemplates_questions.id = a.questions_id where formtemplates_questions.formtemplates_id = (select formtemplates_id from forms where id = $1);
+prepare get_form_qa (integer) as select json_agg(json_build_object('question_id', formtemplates_questions.id, 'question', "question", 'answer', a.answer) order by formtemplates_questions.id)  from formtemplates_questions left  join (select * from forms_answers where forms_id = $1) a  on formtemplates_questions.id = a.questions_id where formtemplates_questions.formtemplates_id = (select formtemplates_id from forms where id = $1);
 
 
 prepare get_form_poll (integer) as select json_agg(json_build_object('pollquestion_id', formtemplates_pollquestions.id, 'pollquestion', "pollquestion", 'pollquestion_type', pollquestion_type ,'answer', forms_pollanswers.answer, 'relations', (select json_build_object('if', "if", 'pollquestion_id', "pollquestions_id") from formtemplates_pollquestions_relations where formtemplates_pollquestions_relations."then" =  formtemplates_pollquestions.id)) ORDER BY formtemplates_pollquestions.id )   from formtemplates_pollquestions left  join forms_pollanswers on formtemplates_pollquestions.id = forms_pollanswers.pollquestions_id and forms_id = $1 where formtemplates_pollquestions.formtemplates_id = (select formtemplates_id from forms where id = $1);
