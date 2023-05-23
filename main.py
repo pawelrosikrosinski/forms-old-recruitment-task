@@ -11,7 +11,7 @@ from psycopg2.extras import DictCursor
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    connection = psycopg2.connect("dbname=forms user=admin host=127.0.0.1 password=password port=5438",
+    connection = psycopg2.connect("dbname=forms user=admin host=127.0.0.1 password=password port=5432",
                                   cursor_factory=DictCursor)
     connection.autocommit = True
 
