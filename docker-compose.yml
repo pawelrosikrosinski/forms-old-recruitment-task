@@ -14,9 +14,6 @@ services:
 
 
 
-  #    volumes:
-  #      - /home/anon/PycharmProjects/forms:/var/lib/postgres
-  #    command: sh -c "psql -d forms < /var/lib/postgres/db_schema.sql"
 
   flask:
     build:
