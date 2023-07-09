@@ -15,8 +15,7 @@ Frameworks, Libraries and Solutions were: Angular, Flask, Psycopg2, Postgres 15.
 
 Languages: Python, PSQL, TS, HTML, CSS
 
-Both ends communicate with URL parameters and JSON's. I know, JSON communication is supposed to be stateless, however in this app in some cases little URL context is required. Different approach would introduce heavy JSON processing redundancy.
-I'm sure that JSON + URL communication is already stateless.
+Both ends communicate with URL parameters and JSON's.
 
 ---
 
