@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormListComponent } from '../form-list/form-list.component';
 import { FormListPost } from '../form-list-post';
 import { Router, RouterModule } from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-form-list-post',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule],
   template: `
     
     <section>
@@ -15,10 +16,10 @@ import { Router, RouterModule } from '@angular/router';
       <div class="post">
       Form ID: {{master.forms_id}}<br>Template Name: {{master.formtemplates_name}}<br>
       
-      <span>
-      <button class="button" (click)="click_edit()">Edit</button>
-      <button class="button" (click)="click_poll()" >Poll</button>
-      </span>
+      <div class="flex">
+      <button class="button" (click)="click_edit()" mat-button color="primary">Edit</button>
+      <button class="button" (click)="click_poll()" mat-button color="primary">Poll</button>
+      </div>
       </div>
 
      

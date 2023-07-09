@@ -24,10 +24,10 @@ services:
     ports:
       - "5000:5000"
 
-  httpd:
-    image: httpd
-    restart: always
-    ports:
-      - "80:80"
-    volumes:
-      - ./docker_httpd/forms-frontend/:/usr/local/apache2/htdocs/
+#  httpd:
+#    image: httpd
+#    restart: always
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - ./docker_httpd/forms-frontend/:/usr/local/apache2/htdocs/

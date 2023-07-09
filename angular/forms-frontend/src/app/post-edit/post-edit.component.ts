@@ -4,16 +4,17 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormQa } from '../form-qa';
 import { QaPostComponent } from '../qa-post/qa-post.component';
+import {MatButtonModule} from '@angular/material/button';
 
 let li:any;
 
 @Component({
   selector: 'app-post-edit',
   standalone: true,
-  imports: [CommonModule, QaPostComponent],
+  imports: [CommonModule, QaPostComponent, MatButtonModule],
   template: `
     
-     <app-qa-post *ngFor="let qpost of FormQa" [qpost] = "qpost"></app-qa-post> <button (click)="test_variable()">SAVE</button>
+     <app-qa-post *ngFor="let qpost of FormQa" [qpost] = "qpost"></app-qa-post> <button (click)="test_variable()"  mat-raised-button color="accent">SAVE</button>
     
   `,
   styleUrls: ['./post-edit.component.css'],

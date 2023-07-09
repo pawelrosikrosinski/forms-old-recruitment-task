@@ -4,7 +4,7 @@
     
     left:50%;
     transform:translate(50%, 0%);
-    background-color: lightgreen;
+    background-color: rgb(152, 152, 221);
     padding:10px;
 
 }

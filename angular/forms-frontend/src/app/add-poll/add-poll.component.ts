@@ -4,6 +4,7 @@ import { AddPollPostComponent } from '../add-poll-post/add-poll-post.component';
 import { PollQUestion } from '../poll-question';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
 
 let li:any
 let id: number = 1
@@ -17,7 +18,7 @@ let sub:any
     standalone: true,
     templateUrl: './add-poll.component.html',
     styleUrls: ['./add-poll.component.css'],
-    imports: [CommonModule, AddPollPostComponent]
+    imports: [CommonModule, AddPollPostComponent, MatButtonModule]
 })
 export class AddPollComponent implements OnInit{
 
