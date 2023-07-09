@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BarComponent } from './bar/bar.component';
-//import { AddIconComponent } from './add-icon/add-icon.component';
 import { FormListComponent } from './form-list/form-list.component';
 import { HttpClientModule } from  '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,16 +11,13 @@ import { PageNotActiveComponent } from './page-not-active/page-not-active.compon
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent
-    
+
   ],
   imports: [
-    BrowserModule, BarComponent, FormListComponent, HttpClientModule, AppRoutingModule, BrowserAnimationsModule, 
+    BrowserModule, BarComponent, FormListComponent, HttpClientModule, AppRoutingModule, BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

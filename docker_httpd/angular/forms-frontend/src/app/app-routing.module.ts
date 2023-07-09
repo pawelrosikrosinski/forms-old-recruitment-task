@@ -9,9 +9,6 @@ import { AddPollComponent } from './add-poll/add-poll.component';
 
 const routes: Routes = [
   {path: '', component: FormListComponent},
-  
- // {path: '**', component: PageNotActiveComponent},
- 
   {path: 'edit/:forms_id', component: PostEditComponent},
   {path: 'add', component: AddFormComponent},
   {path: 'poll/:forms_id', component: AddPollComponent},
