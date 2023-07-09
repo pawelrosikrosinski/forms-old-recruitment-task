@@ -20,8 +20,6 @@ I'm sure that JSON + URL communication is already stateless.
 
 ---
 
-Now, more about assigment compatibility.
-
 1. Every form has two sets of possible answers: questions and pollquestions.
 2. Questions are rendered statically, while pollquestions are rendered dynamically. Also, "questions" are always of type String, while "pollquestions" can be either String or Boolean.
 3. "Pollquestions" are rendered in non-trivial order - depending on previous pollanswers. The database defines relation tree. For now, only "equals to" condition is implemented, but implementing any other would only require adding new switch case.
@@ -32,7 +30,7 @@ Now, more about assigment compatibility.
 
 Build instructions (pro forma):
 
-1. git clone https://github.com/pawelrosikrosinski/forms.git
+1. git clone https://github.com/pawelrosikrosinski/forms
 2. kindly 'cd' into it
 3. /bin/sh -c '[sudo] docker compose build'
 4. /bin/sh -c '[sudo] docker compose up'
