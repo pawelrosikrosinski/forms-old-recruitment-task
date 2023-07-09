@@ -6,7 +6,7 @@ Postgres takes care of all backend json processing (both synthesis and analysis)
 
 All queries are SQL-injection resistant.
 
-Frameworks, Libraries and Solutions were: Angular, Flask, Psycopg2, Postgres 15.2
+Frameworks, Libraries and Solutions were: Angular, Flask, Psycopg2, Postgres 15
 
 Languages: Python, PSQL, TS, HTML, CSS
 
